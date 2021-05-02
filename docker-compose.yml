@@ -1,0 +1,29 @@
+version: '3'
+services: 
+    news:
+        build: ./news
+        ports:
+            - "5001:5001"
+        expose:
+            - '5002'
+        volumes:
+            - ./news:/code    
+        network_mode: bridge    
+    states:
+        build: ./states
+        ports:
+            - "5002:5002"
+        expose:
+            - '5002'
+        volumes:
+            - ./states:/code    
+        network_mode: bridge    
+    covidata:
+        build: ./covidata
+        ports:
+            - "5003:5003"
+        expose:
+            - '5003'
+        volumes:
+            - ./covidata:/code    
+        network_mode: bridge
