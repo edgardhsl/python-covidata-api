@@ -7,6 +7,7 @@
 # 2021 Edgard H. Santos Lopes, Bahia, Brasil
 # email edgardhwp@outlook.com
 # -----------------------------------------------------------
+
 import sys, os
 import requests
 import json
@@ -28,6 +29,8 @@ class BingNewsSearch:
     __size: int    = 10
 
     __response     = {};
+    
+    __imageFault   = 'https://s.itl.cat/pngfile/s/136-1361462_computer-hacker-cyber-crime-latest-news-animated-wallpaper.png';
 
     def __mountApi(self):
         self.__url = self.__urlNewsApi+'?q=('+self.__keywords+')&mkt='+self.__lang+'&rapidapi-key='+self.__apiKey
@@ -64,11 +67,11 @@ class BingNewsSearch:
     
     def mapResults(self, item):
         return NewsResult(
-            item['name'],
-            item['description'],
-            item['image']['contentUrl'],
-            item['provider'][0]['name'],
-            item['url']
+            item.get('name'),
+            item.get('description'),
+            item.get('image').get('contentUrl') if item.get('image') else self.__imageFault,
+            item.get('provider')[0].get('name'),
+            item.get('url')
         ).toJSON()
 
 
